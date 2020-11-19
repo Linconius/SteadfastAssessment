@@ -1,0 +1,14 @@
+﻿@*@using SteadFastAssessment.Shared.Model
+
+<Microsoft.AspNetCore.Components.Forms.EditForm Model="AddModel"
+                                                OnValidSubmit="AddFormValidSubmit">
+    <InputText @bind-Value="AddModel.EmployeeName"></InputText>
+    <InputDate @bind-Value="AddModel.Date"></InputDate>
+    <InputNumber @bind-Value="AddModel.HoursWorked"></InputNumber>
+    <button type="submit">Submit</button>
+    <button type="button" @onclick="CancelAddForm">Cancel</button>
+</Microsoft.AspNetCore.Components.Forms.EditForm>
+
+@code {
+    private TimeSheet AddModel { get; set; } = new TimeSheet();
+}*@

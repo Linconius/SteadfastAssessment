@@ -1,0 +1,32 @@
+﻿@using SteadFastAssessment.Shared.Model
+@if (Data is null)
+{
+<p>Loading Sheets...</p>
+}
+else
+{
+<table>
+    <thead>
+        <tr>
+            <th>Employee Name</th>
+            <th>Date</th>
+            <th>Hours Worked</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sheet in Data)
+        {
+            <tr>
+                <td>@sheet.EmployeeName</td>
+                <td>@sheet.Date.ToString("dd/MM/yyyy")</td>
+                <td>@sheet.HoursWorked</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
+@code{
+    [Parameter]
+    public IList<ITimeSheet> Data { get; set; }
+}

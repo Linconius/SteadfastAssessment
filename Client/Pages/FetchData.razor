@@ -1,46 +1,50 @@
 ﻿@page "/fetchdata"
-@using SteadFastAssessment.Shared
+@using SteadFastAssessment.Shared.Model
 @inject HttpClient Http
 
-<h1>Weather forecast</h1>
+<h1>Timesheet List</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
-
-@if (forecasts == null)
+@if (AddFormActive)
 {
-    <p><em>Loading...</em></p>
+    <Microsoft.AspNetCore.Components.Forms.EditForm Model="AddModel"
+                                                    OnValidSubmit="AddFormValidSubmit">
+        <InputText @bind-Value="AddModel.EmployeeName"></InputText>
+        <InputDate @bind-Value="AddModel.Date"></InputDate>
+        <InputNumber @bind-Value="AddModel.HoursWorked"></InputNumber>
+        <button type="submit">Submit</button>
+        <button type="button" @onclick="CancelAddForm">Cancel</button>
+    </Microsoft.AspNetCore.Components.Forms.EditForm>
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <TimeSheetTable Data="timeSheets"></TimeSheetTable>
+    <button type="button" @onclick="() => { AddFormActive = true; }">Add Sheet</button>
 }
 
 @code {
-    private WeatherForecast[] forecasts;
+    private ITimeSheet[] timeSheets;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        timeSheets = await Http.GetFromJsonAsync<TimeSheetModel[]>("TimeSheet");
     }
 
+    private async Task AddFormValidSubmit()
+    {
+        var result = await Http.PostAsJsonAsync<TimeSheetModel>("TimeSheet", (TimeSheetModel)AddModel);
+        CancelAddForm();
+        //Get an updated list from server
+        timeSheets = await Http.GetFromJsonAsync<TimeSheetModel[]>("TimeSheet");
+    }
+
+    private void CancelAddForm()
+    {
+        AddFormActive = false;
+        //Clear fields for User Experience
+        AddModel = new TimeSheetModel();
+    }
+
+    private bool AddFormActive { get; set; }
+
+    private TimeSheetModel AddModel { get; set; } = new TimeSheetModel();
 }
