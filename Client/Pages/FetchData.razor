@@ -7,14 +7,6 @@
 @if (AddFormActive)
 {
     <TimeSheetForm OnAddFormCancel="CancelAdd" OnTimeSheetSubmit="(model) => CreateTimeSheet(model)"></TimeSheetForm>
-    @*<Microsoft.AspNetCore.Components.Forms.EditForm Model="AddModel"
-                                                    OnValidSubmit="() => CreateTimeSheet(AddModel)">
-        <InputText @bind-Value="AddModel.EmployeeName"></InputText>
-        <InputDate @bind-Value="AddModel.Date"></InputDate>
-        <InputNumber @bind-Value="AddModel.HoursWorked"></InputNumber>
-        <button type="submit">Submit</button>
-        <button type="button" @onclick="CancelAdd">Cancel</button>
-    </Microsoft.AspNetCore.Components.Forms.EditForm>*@
 }
 else
 {
