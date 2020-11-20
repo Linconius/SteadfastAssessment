@@ -20,7 +20,7 @@ namespace SteadFastAssessment.Client
             #if DEBUG
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             #else
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:44333/") });/
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:44333/") });
             #endif
 
             await builder.Build().RunAsync();
