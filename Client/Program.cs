@@ -17,11 +17,14 @@ namespace SteadFastAssessment.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            #if DEBUG
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            #else
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:44333/") });
-            #endif
+            if (builder.HostEnvironment.BaseAddress.Contains("linconius.github.io"))
+            {
+                builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://steadfastassessmentserver.azurewebsites.net/") });
+            }
+            else
+            {
+                builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });       
+            }
 
             await builder.Build().RunAsync();
         }
