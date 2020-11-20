@@ -1,0 +1,13 @@
+﻿.valid, .valid.modified:not([type=checkbox]), .invalid {
+    outline-style: auto;
+    transition: outline-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+.buttonbar {
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+.buttonbar button {
+    margin: auto 1rem;
+}

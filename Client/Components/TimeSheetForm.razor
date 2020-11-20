@@ -17,8 +17,10 @@
         <label>Hours Worked</label>
         <InputNumber class="form-control" @bind-Value="AddModel.HoursWorked"></InputNumber>
     </div>
-    <button type="submit" class="btn btn-success">Submit</button>
-    <button type="button" class="btn btn-danger" @onclick="onCancelClick">Cancel</button>
+    <div class="buttonbar">
+        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="button" class="btn btn-danger" @onclick="onCancelClick">Cancel</button>
+    </div>
 </Microsoft.AspNetCore.Components.Forms.EditForm>
 
 @code {

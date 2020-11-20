@@ -11,7 +11,9 @@
 else
 {
     <TimeSheetTable Data="timeSheets"></TimeSheetTable>
-    <button type="button" @onclick="() => { AddFormActive = true; }">Add Sheet</button>
+    <div class="buttonbar">
+        <button type="button" class="btn btn-primary" @onclick="() => { AddFormActive = true; }">Add Sheet</button>
+    </div>
 }
 
 @code {
