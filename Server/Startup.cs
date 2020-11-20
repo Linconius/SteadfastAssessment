@@ -28,6 +28,18 @@ namespace SteadFastAssessment.Server
             services.AddRazorPages();
             //Add EntityFramework Infrastructure
             services.AddInfrastructure(Configuration);
+            //Add CORS Policies
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "GitHubPages",
+                                  builder =>
+                                  {
+                                      builder
+                                      .WithOrigins("https://linconius.github.io", "https://www.test-cors.org")
+                                      .AllowAnyHeader()
+                                      .AllowAnyMethod();
+                                  }) ;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,10 +70,7 @@ namespace SteadFastAssessment.Server
 
             #region CORS Policy Configuration
             //Enable CORS Policy for Frontend Client Host
-            app.UseCors(policy =>
-            policy.WithOrigins("FRONTEND_ADDRESS_HERE")
-            .AllowAnyMethod()
-            .WithHeaders(HeaderNames.ContentType));
+            app.UseCors();
             #endregion
 
             app.UseEndpoints(endpoints =>
