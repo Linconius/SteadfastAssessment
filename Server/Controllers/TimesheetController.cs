@@ -39,17 +39,20 @@ namespace SteadFastAssessment.Server.Controllers
         [HttpPost]
         public void Post([FromBody] TimeSheetModel timesheet)
         {
-            //Validation Logic would happen here if required
-            //Create Entity from validated data
-            var toAdd = new TimeSheet
+            //Server-side validation
+            if (ModelState.IsValid)
             {
-                EmployeeName = timesheet.EmployeeName,
-                Date = timesheet.Date,
-                HoursWorked = timesheet.HoursWorked
-            };
-            //Add to EntityFramework here
-            _context.TimeSheets.Add(toAdd);
-            _context.SaveChanges();
+                //Create Entity from validated data
+                var toAdd = new TimeSheet
+                {
+                    EmployeeName = timesheet.EmployeeName,
+                    Date = timesheet.Date,
+                    HoursWorked = timesheet.HoursWorked
+                };
+                //Add to EntityFramework here
+                _context.TimeSheets.Add(toAdd);
+                _context.SaveChanges();
+            }
         }
     }
 }

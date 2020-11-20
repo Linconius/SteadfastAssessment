@@ -1,7 +1,10 @@
 ﻿@using SteadFastAssessment.Shared.Model
 
+@*Blazor EditForm will trigger external TimeSheetSubmit event with submitted model*@
 <Microsoft.AspNetCore.Components.Forms.EditForm Model="AddModel"
                                                 OnValidSubmit="() => OnTimeSheetSubmit.InvokeAsync(AddModel)">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
     <div class="form-group">
         <label>Employee Name</label>
         <InputText class="form-control" @bind-Value="AddModel.EmployeeName"></InputText>
@@ -15,20 +18,35 @@
         <InputNumber class="form-control" @bind-Value="AddModel.HoursWorked"></InputNumber>
     </div>
     <button type="submit" class="btn btn-success">Submit</button>
-    <button type="button" class="btn btn-danger" @onclick="OnCancelClick">Cancel</button>
+    <button type="button" class="btn btn-danger" @onclick="onCancelClick">Cancel</button>
 </Microsoft.AspNetCore.Components.Forms.EditForm>
 
 @code {
     [Parameter] public EventCallback<TimeSheetModel> OnTimeSheetSubmit { get; set; }
     [Parameter] public EventCallback OnAddFormCancel { get; set; }
 
-
     private TimeSheetModel AddModel { get; set; } = new TimeSheetModel();
 
-    private void OnCancelClick()
+    protected override Task OnInitializedAsync()
     {
+        //Initialize Form Model
+        RefreshModel();
+        return base.OnInitializedAsync();
+    }
+
+    private void onCancelClick()
+    {
+        //Invoke Cancel event
         OnAddFormCancel.InvokeAsync();
         //Clear fields for User Experience
-        AddModel = new TimeSheetModel();
+        RefreshModel();
+    }
+
+    protected void RefreshModel()
+    {
+        //Populate default form values
+        AddModel.EmployeeName = string.Empty;
+        AddModel.Date = DateTime.Now;
+        AddModel.HoursWorked = 0;
     }
 }
