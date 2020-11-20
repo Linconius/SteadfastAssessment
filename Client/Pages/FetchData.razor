@@ -1,20 +1,13 @@
-﻿@page "/fetchdata"
+﻿@page "/fetchdata/"
 @using SteadFastAssessment.Shared.Model
 @inject HttpClient Http
+@inject NavigationManager NavManager
 
 <h1 class="timeSheetsTitle">Time Sheets</h1>
-
-@if (AddFormActive)
-{
-    <TimeSheetForm OnAddFormCancel="CancelAdd" OnTimeSheetSubmit="(model) => CreateTimeSheet(model)"></TimeSheetForm>
-}
-else
-{
-    <TimeSheetTable Data="timeSheets"></TimeSheetTable>
-    <div class="buttonbar">
-        <button type="button" class="btn btn-primary" @onclick="() => { AddFormActive = true; }">Add Sheet</button>
-    </div>
-}
+<TimeSheetTable Data="timeSheets"></TimeSheetTable>
+<div class="buttonbar">
+    <button type="button" class="btn btn-primary" @onclick="() => StartAdd()">Add Sheet</button>
+</div>
 
 @code {
     private ITimeSheet[] timeSheets;
@@ -24,20 +17,9 @@ else
         timeSheets = await Http.GetFromJsonAsync<TimeSheetModel[]>("TimeSheet");
     }
 
-    private async Task CreateTimeSheet(TimeSheetModel model)
+    private void StartAdd()
     {
-        var result = await Http.PostAsJsonAsync<TimeSheetModel>("TimeSheet", model);
-        CancelAdd();
-        //Get an updated list from server
-        timeSheets = await Http.GetFromJsonAsync<TimeSheetModel[]>("TimeSheet");
+        //Navigate to Add TimeSheet here
+        NavManager.NavigateTo("/addsheet/");
     }
-
-    private void CancelAdd()
-    {
-        AddFormActive = false;
-    }
-
-    private bool AddFormActive { get; set; }
-
-    private TimeSheetModel AddModel { get; set; } = new TimeSheetModel();
 }

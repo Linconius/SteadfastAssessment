@@ -1,0 +1,26 @@
+﻿@page "/addsheet/"
+@using SteadFastAssessment.Shared.Model
+@inject HttpClient Http
+@inject NavigationManager NavManager
+
+<h1 class="timeSheetsTitle">Add Time Sheet</h1>
+
+<TimeSheetForm OnAddFormCancel="CancelAdd" OnTimeSheetSubmit="(model) => CreateTimeSheet(model)"></TimeSheetForm>
+
+
+@code {
+
+    private async Task CreateTimeSheet(TimeSheetModel model)
+    {
+        var result = await Http.PostAsJsonAsync<TimeSheetModel>("TimeSheet", model);
+        CancelAdd();
+    }
+
+    private void CancelAdd()
+    {
+        //Navigate to Timesheets here
+        NavManager.NavigateTo("/fetchdata/");
+    }
+
+    private TimeSheetModel AddModel { get; set; } = new TimeSheetModel();
+}
