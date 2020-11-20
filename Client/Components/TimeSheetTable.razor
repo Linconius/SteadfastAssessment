@@ -5,7 +5,7 @@
 }
 else
 {
-<table class="table table-striped table-hover">
+<table class="table table-hover">
     <thead class="thead-dark">
         <tr>
             <th>Employee Name</th>
@@ -16,7 +16,9 @@ else
     <tbody>
         @foreach (var sheet in Data)
         {
-            <tr>
+            <tr class="@(sheet.HoursWorked < 6 ? "table-warning" : 
+                         sheet.HoursWorked > 10 ? "table-danger" :
+                         "table-success")">
                 <td>@sheet.EmployeeName</td>
                 <td>@sheet.Date.ToString("dd/MM/yyyy")</td>
                 <td>@sheet.HoursWorked</td>

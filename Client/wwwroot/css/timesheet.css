@@ -8,6 +8,9 @@
     justify-content:center;
     flex-wrap:wrap;
 }
+.timeSheetsTitle {
+    text-align: center;
+}
 .buttonbar button {
     margin: auto 1rem;
 }

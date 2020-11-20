@@ -1,7 +1,28 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+<h1>.Net Developer Practical Test</h1>
+<br />
+<h2>Background</h2>
+<p>
+    Steadfast has an urgent need for a Timesheet application. As this is required as soon as possible, Phase 1 will be a basic application which will capture new timesheet entries and display all entries.
+</p>
+<br />
+<h2>Solution</h2>
+<p>
+    My solution uses Blazor components to create a TimeSheetTable and a TimeSheetForm<br />
+    The TimeSheetTable uses the RESTful API to Get timesheet data<br />
+    Both components use Bootstrap styles<br />
+    The TimeSheetTable dynamically styles each row based on how many hours they have worked<br />
+    [Less than 6 = <span style="font-weight: bold;color: red;">Red</span>, 6 - 10 = <span style="font-weight: bold; color: forestgreen;">Green</span>, 10 and above = <span style="font-weight: bold;color: goldenrod;">Yellow</span>]<br />
+    <br />
+    The TimeSheetForm uses the RESTful API to Post a timesheet to the server<br />
+    The TimeSheetForm includes Client-Side validation to ensure all fields are entered, and that the HoursWorked is between 0-24<br />
+    This validation is also checked in the RESTful API<br />
+    <br />
+    The timesheet.css stylesheet includes style updates to make the Blazor Form Inputs compatible with Bootstrap<br />
+    The stylesheet also includes a .buttonbar class, to give flexbox centering to the button bars in the TimeSheetTable and TimeSheetForm components.
+</p>
+<br />
+<p>
+    Please navigate to <NavLink href="fetchdata">Time Sheets</NavLink> to test my solution!
+</p>
