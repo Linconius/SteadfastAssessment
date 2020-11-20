@@ -1,14 +1,25 @@
-﻿@*@using SteadFastAssessment.Shared.Model
+﻿@using SteadFastAssessment.Shared.Model
 
 <Microsoft.AspNetCore.Components.Forms.EditForm Model="AddModel"
-                                                OnValidSubmit="AddFormValidSubmit">
+                                                OnValidSubmit="() => OnTimeSheetSubmit.InvokeAsync(AddModel)">
     <InputText @bind-Value="AddModel.EmployeeName"></InputText>
     <InputDate @bind-Value="AddModel.Date"></InputDate>
     <InputNumber @bind-Value="AddModel.HoursWorked"></InputNumber>
     <button type="submit">Submit</button>
-    <button type="button" @onclick="CancelAddForm">Cancel</button>
+    <button type="button" @onclick="OnCancelClick">Cancel</button>
 </Microsoft.AspNetCore.Components.Forms.EditForm>
 
 @code {
-    private TimeSheet AddModel { get; set; } = new TimeSheet();
-}*@
+    [Parameter] public EventCallback<TimeSheetModel> OnTimeSheetSubmit { get; set; }
+    [Parameter] public EventCallback OnAddFormCancel { get; set; }
+
+
+    private TimeSheetModel AddModel { get; set; } = new TimeSheetModel();
+
+    private void OnCancelClick()
+    {
+        OnAddFormCancel.InvokeAsync();
+        //Clear fields for User Experience
+        AddModel = new TimeSheetModel();
+    }
+}

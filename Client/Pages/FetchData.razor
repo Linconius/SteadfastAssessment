@@ -6,14 +6,15 @@
 
 @if (AddFormActive)
 {
-    <Microsoft.AspNetCore.Components.Forms.EditForm Model="AddModel"
-                                                    OnValidSubmit="AddFormValidSubmit">
+    <TimeSheetForm OnAddFormCancel="CancelAdd" OnTimeSheetSubmit="(model) => CreateTimeSheet(model)"></TimeSheetForm>
+    @*<Microsoft.AspNetCore.Components.Forms.EditForm Model="AddModel"
+                                                    OnValidSubmit="() => CreateTimeSheet(AddModel)">
         <InputText @bind-Value="AddModel.EmployeeName"></InputText>
         <InputDate @bind-Value="AddModel.Date"></InputDate>
         <InputNumber @bind-Value="AddModel.HoursWorked"></InputNumber>
         <button type="submit">Submit</button>
-        <button type="button" @onclick="CancelAddForm">Cancel</button>
-    </Microsoft.AspNetCore.Components.Forms.EditForm>
+        <button type="button" @onclick="CancelAdd">Cancel</button>
+    </Microsoft.AspNetCore.Components.Forms.EditForm>*@
 }
 else
 {
@@ -29,19 +30,17 @@ else
         timeSheets = await Http.GetFromJsonAsync<TimeSheetModel[]>("TimeSheet");
     }
 
-    private async Task AddFormValidSubmit()
+    private async Task CreateTimeSheet(TimeSheetModel model)
     {
-        var result = await Http.PostAsJsonAsync<TimeSheetModel>("TimeSheet", (TimeSheetModel)AddModel);
-        CancelAddForm();
+        var result = await Http.PostAsJsonAsync<TimeSheetModel>("TimeSheet", model);
+        CancelAdd();
         //Get an updated list from server
         timeSheets = await Http.GetFromJsonAsync<TimeSheetModel[]>("TimeSheet");
     }
 
-    private void CancelAddForm()
+    private void CancelAdd()
     {
         AddFormActive = false;
-        //Clear fields for User Experience
-        AddModel = new TimeSheetModel();
     }
 
     private bool AddFormActive { get; set; }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Net.Http.Headers;
 using SteadFastAssessment.Server.Entities;
 using System.Linq;
 
@@ -53,6 +54,14 @@ namespace SteadFastAssessment.Server
             #region Automatic Migrations
             //Run the initial migration check
             app.RunStartupMigration();
+            #endregion
+
+            #region CORS Policy Configuration
+            //Enable CORS Policy for Frontend Client Host
+            app.UseCors(policy =>
+            policy.WithOrigins("FRONTEND_ADDRESS_HERE")
+            .AllowAnyMethod()
+            .WithHeaders(HeaderNames.ContentType));
             #endregion
 
             app.UseEndpoints(endpoints =>

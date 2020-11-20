@@ -5,8 +5,8 @@
 }
 else
 {
-<table>
-    <thead>
+<table class="table table-striped table-hover">
+    <thead class="thead-dark">
         <tr>
             <th>Employee Name</th>
             <th>Date</th>
@@ -27,6 +27,5 @@ else
 }
 
 @code{
-    [Parameter]
-    public IList<ITimeSheet> Data { get; set; }
+    [Parameter] public IList<ITimeSheet> Data { get; set; }
 }
