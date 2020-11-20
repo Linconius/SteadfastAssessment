@@ -35,7 +35,7 @@ namespace SteadFastAssessment.Server
                                   builder =>
                                   {
                                       builder
-                                      .WithOrigins("https://linconius.github.io", "https://www.test-cors.org")
+                                      .WithOrigins("https://linconius.github.io")
                                       .AllowAnyHeader()
                                       .AllowAnyMethod();
                                   }) ;
@@ -70,7 +70,7 @@ namespace SteadFastAssessment.Server
 
             #region CORS Policy Configuration
             //Enable CORS Policy for Frontend Client Host
-            app.UseCors();
+            app.UseCors("GitHubPages");
             #endregion
 
             app.UseEndpoints(endpoints =>
